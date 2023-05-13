@@ -11,6 +11,8 @@
 		5575D2A32A0FCD5500D00C9A /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5575D2A22A0FCD5500D00C9A /* NetworkMonitor.swift */; };
 		5575D2A52A0FCD9C00D00C9A /* WeatherAPIsUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5575D2A42A0FCD9C00D00C9A /* WeatherAPIsUrl.swift */; };
 		5575D2A72A0FCFE200D00C9A /* NetworkCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5575D2A62A0FCFE200D00C9A /* NetworkCall.swift */; };
+		558499BE2A102F1800A82F0A /* CitiesWeatherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558499BC2A102F1800A82F0A /* CitiesWeatherTableViewCell.swift */; };
+		558499BF2A102F1800A82F0A /* CitiesWeatherTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 558499BD2A102F1800A82F0A /* CitiesWeatherTableViewCell.xib */; };
 		55E196A42A0F9326001A99C2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E196A32A0F9326001A99C2 /* AppDelegate.swift */; };
 		55E196A62A0F9326001A99C2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E196A52A0F9326001A99C2 /* SceneDelegate.swift */; };
 		55E196A82A0F9326001A99C2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E196A72A0F9326001A99C2 /* ViewController.swift */; };
@@ -46,6 +48,8 @@
 		5575D2A22A0FCD5500D00C9A /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		5575D2A42A0FCD9C00D00C9A /* WeatherAPIsUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPIsUrl.swift; sourceTree = "<group>"; };
 		5575D2A62A0FCFE200D00C9A /* NetworkCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCall.swift; sourceTree = "<group>"; };
+		558499BC2A102F1800A82F0A /* CitiesWeatherTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesWeatherTableViewCell.swift; sourceTree = "<group>"; };
+		558499BD2A102F1800A82F0A /* CitiesWeatherTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CitiesWeatherTableViewCell.xib; sourceTree = "<group>"; };
 		55E196A02A0F9326001A99C2 /* testing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55E196A32A0F9326001A99C2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55E196A52A0F9326001A99C2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +110,15 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
+		558499BB2A102EDD00A82F0A /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+				558499BC2A102F1800A82F0A /* CitiesWeatherTableViewCell.swift */,
+				558499BD2A102F1800A82F0A /* CitiesWeatherTableViewCell.xib */,
+			);
+			path = CustomCells;
+			sourceTree = "<group>";
+		};
 		55E196972A0F9326001A99C2 = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +145,7 @@
 				55E196D52A0FA3D0001A99C2 /* Application */,
 				55E196D62A0FA3E7001A99C2 /* ViewControllers */,
 				55E196D72A0FA3FF001A99C2 /* ViewModels */,
+				558499BB2A102EDD00A82F0A /* CustomCells */,
 				5575D29E2A0FC8C100D00C9A /* Models */,
 				5575D2A12A0FCCFD00D00C9A /* Networking */,
 				55E196D82A0FA40D001A99C2 /* Resources */,
@@ -300,6 +314,7 @@
 				55E196B02A0F9327001A99C2 /* LaunchScreen.storyboard in Resources */,
 				55E196AD2A0F9327001A99C2 /* Assets.xcassets in Resources */,
 				55E196AB2A0F9326001A99C2 /* Main.storyboard in Resources */,
+				558499BF2A102F1800A82F0A /* CitiesWeatherTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +345,7 @@
 				5575D2A02A0FC8D400D00C9A /* City.swift in Sources */,
 				55E196A42A0F9326001A99C2 /* AppDelegate.swift in Sources */,
 				55E196A62A0F9326001A99C2 /* SceneDelegate.swift in Sources */,
+				558499BE2A102F1800A82F0A /* CitiesWeatherTableViewCell.swift in Sources */,
 				55E196DC2A0FA503001A99C2 /* DetailsViewController.swift in Sources */,
 				5575D2A32A0FCD5500D00C9A /* NetworkMonitor.swift in Sources */,
 				5575D2A52A0FCD9C00D00C9A /* WeatherAPIsUrl.swift in Sources */,

@@ -41,6 +41,7 @@ class DetailsViewModel{
         //Show the first text
         delegate?.updateProgressText(text: getNextTextToShow())
         
+        //Make api call for the first city
         makeWeatherApiCallForCurrentCity()
         
         //Start timer
@@ -51,13 +52,10 @@ class DetailsViewModel{
     @objc func fireTimer(timer: Timer){
         secondsCounter += 1
         
+        //Increment the progress bar and stop the timer if the bar is full
         if delegate!.updateProgressBarProgress(amount: progressTimeInterval){
             print("Done counting")
-            
-            for city in cities {
-                print("\(city.name)   \(city.cityData?.main.temp ?? -999)  \(city.cityData?.weather[0].icon ?? "No icon")")
-            }
-            
+            delegate?.showCitiesData(cities: cities)
             timer.invalidate()
         }
         
@@ -66,11 +64,13 @@ class DetailsViewModel{
             delegate?.updateProgressText(text: getNextTextToShow())
         }
         
+        //Make api call every 10 second
         if (secondsCounter % 10 == 0){
             makeWeatherApiCallForCurrentCity()
         }
     }
     
+    //Manage rotating over texts array and return the right text
     private func getNextTextToShow() -> String{
         currentTextIndex += 1
         if currentTextIndex >= texts.count{
@@ -80,6 +80,7 @@ class DetailsViewModel{
         return texts[currentTextIndex]
     }
     
+    //Pick the right city for the API call
     private func makeWeatherApiCallForCurrentCity(){
         currentCityIndex += 1
         
@@ -90,7 +91,7 @@ class DetailsViewModel{
         loadWeatherDataFromApi(city: cities[currentCityIndex])
     }
     
-    
+    //Make the async API Call
     private func loadWeatherDataFromApi(city: City){
         print("making call for \(city.name) at \(secondsCounter)")
         Task{
