@@ -17,7 +17,7 @@ class DetailsViewModel{
     private var secondsCounter: Int = 0
     
     //Cities with coordinates
-    let cities: [City] = [
+    var cities: [City] = [
     City(name: "Rennes", latitude: 48.1113387, longitude: -1.6800198),
     City(name: "Paris", latitude: 48.8588897, longitude: 2.320041),
     City(name: "Nantes", latitude: 47.2186371, longitude: -1.5541362),
@@ -30,6 +30,9 @@ class DetailsViewModel{
     private let textChangeInterval: Int = 6 //in seconds
     private var currentTextIndex:Int = -1
     
+    private let networkCall = NetworkCall()
+    private var currentCityIndex: Int = -1
+    
     init() {
         progressTimeInterval = 1/progressBarFillTime
     }
@@ -37,6 +40,8 @@ class DetailsViewModel{
     func startProgressBarTimer(){
         //Show the first text
         delegate?.updateProgressText(text: getNextTextToShow())
+        
+        makeWeatherApiCallForCurrentCity()
         
         //Start timer
         let timer = Timer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
@@ -48,12 +53,21 @@ class DetailsViewModel{
         
         if delegate!.updateProgressBarProgress(amount: progressTimeInterval){
             print("Done counting")
+            
+            for city in cities {
+                print("\(city.name)   \(city.cityData?.main.temp ?? -999)  \(city.cityData?.weather[0].icon ?? "No icon")")
+            }
+            
             timer.invalidate()
         }
         
         //Update text every 6 seconds
         if (secondsCounter % textChangeInterval == 0){
             delegate?.updateProgressText(text: getNextTextToShow())
+        }
+        
+        if (secondsCounter % 10 == 0){
+            makeWeatherApiCallForCurrentCity()
         }
     }
     
@@ -66,9 +80,33 @@ class DetailsViewModel{
         return texts[currentTextIndex]
     }
     
-    private func loadWeatherData(){
+    private func makeWeatherApiCallForCurrentCity(){
+        currentCityIndex += 1
+        
+        if currentCityIndex >= cities.count {
+            return
+        }
+        
+        loadWeatherDataFromApi(city: cities[currentCityIndex])
+    }
+    
+    
+    private func loadWeatherDataFromApi(city: City){
+        print("making call for \(city.name) at \(secondsCounter)")
         Task{
+            let response = await networkCall.makeWeatherApiCall(city: city)
             
+            switch response {
+            case .success(let city):
+                for index in cities.indices {
+                    if city.name == cities[index].name {
+                        cities[index] = city
+                        break
+                    }
+                }
+            case .failure(_):
+                print("Failed to load data")
+            }
         }
     }
 }

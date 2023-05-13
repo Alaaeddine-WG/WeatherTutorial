@@ -9,47 +9,35 @@ import Foundation
 
 final class NetworkCall{
     
-    //MARK: Login api call
-    func tryLoginApiCall(userInfo: User) async -> Result<String,LoginApiCallError>{
+    func makeWeatherApiCall(city: City) async -> Result<City, ApiCallError>{
         
-        //encoding json data
-        let encodedData: Data
-        do{
-            encodedData = try JSONEncoder().encode(userInfo)
-        }catch{
-            return .failure(.json_encoder_error)
-        }
-        
-        // Send request
-        guard let url = URL(string: APIsUrls.loginUrl) else {
+        guard let url = URL(string: WeatherAPIsUrls.weatherDetailsUrl(latitude: city.latitude, longitude: city.longitude)) else {
             return .failure(.url_error)
         }
         
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = encodedData
-        
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        //request.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        let request = URLRequest(url: url)
         
         do{
-            let (data, _) = try await URLSession.shared.data(for: request)
+            let (data,_) = try await URLSession.shared.data(for: request)
             
-            guard let response = String(data: data, encoding: .utf8) else {
-                return .failure(.unrecognized_response)
-            }
+            let weatherData: CityWeatherData = try JSONDecoder().decode(CityWeatherData.self, from: data)
             
-            if(response.count == 0){
-                return .failure(.unrecognized_response)
-            }else if(response.contains("LOGIN OR PASSWORD IS INCORRECT")){
-                return .failure(.email_or_password_incorrect)
-            }else if(response.contains("USER IS NOT ENABLED YET")){
-                return .failure(.account_is_not_verified)
-            }else{
-                return .success(response)
-            }
+            var newCityData = city
+            newCityData.cityData = weatherData
+            
+            return .success(newCityData)
         }catch{
+            print("Fetch weather data attempt for \(city.name) failed with error: \(error.localizedDescription)")
             return .failure(.unexpected_error)
         }
     }
+}
+
+enum ApiCallError: Error{
+    case unexpected_error
+    case json_encoder_error
+    case url_error
+    case unrecognized_response
+    case email_or_password_incorrect
+    case account_is_not_verified
 }

@@ -13,7 +13,7 @@ final class WeatherAPIsUrls{
     private static let apiKey = "3a72eaf64f3c7fd81cdb020612e44420"
     
     static func weatherDetailsUrl(latitude: Double, longitude: Double) -> String{
-        return "data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&units=metric"
+        return "\(baseUrl)data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&units=metric"
     }
     
 }
